@@ -24,6 +24,7 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var imageViewBattery: UIImageView!
     @IBOutlet weak var labelPercentBattery: UILabel!
     @IBOutlet weak var imageViewBluetooth: UIImageView!
+    @IBOutlet weak var ledButton: UIButton!
     
     ////// Actions
     

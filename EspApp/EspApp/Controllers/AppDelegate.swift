@@ -52,6 +52,64 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //self.saveContext() // uncomment if you uses CoreData
     }
     
+    func application(_ application: UIApplication,
+                     open url: URL,
+                     options: [UIApplication.OpenURLOptionsKey : Any] = [:] ) -> Bool {
+        let appController = MainController.getInstance()
+        let ble = BLE.getInstance()
+        // Determine who sent the URL.
+        let sendingAppID = options[.sourceApplication]
+        print("source application = \(sendingAppID ?? "Unknown")")
+        
+        // Process the URL.
+        guard let components = NSURLComponents(url: url, resolvingAgainstBaseURL: true),
+            let actionPath = components.path else {
+                print("Invalid URL or action path missing")
+                return false
+        }
+        
+        print("action = \(actionPath)")
+        switch (actionPath) {
+        case "firmware":
+            guard let params = components.queryItems else {
+                print("Query items missing")
+                return false
+            }
+            if let firmwareBranch = params.first(where: { $0.name == "branch" })?.value {
+                print("branch = \(firmwareBranch)")
+                return true
+            } else {
+                print("Firmware branch missing")
+                return false
+            }
+        default:
+            if (components.host?.contains("bleenky.apps.radiosound.com") ?? false)
+            {
+                /* Opened from a QR code */
+                /* Determine branch name */
+                let segments = components.host!.split(separator: ".")
+                if (ble.connected) {
+                    switch (segments[0])
+                    {
+                    case "bleenky":
+                        print("production firmware URL")
+                        appController.bleSendClearUrl()
+                        break
+                    default:
+                        print("probably a review firmware URL: \(segments[0])")
+                        appController.bleSendSetUrl(url: components.host!)
+                        break
+                    }
+                }
+
+                return true
+            }
+            print("Unknown action")
+            return false
+        }
+    }
+
+    
     // MARK: - Core Data stack, if use Core Data
     
     //    lazy var persistentContainer: NSPersistentContainer = {

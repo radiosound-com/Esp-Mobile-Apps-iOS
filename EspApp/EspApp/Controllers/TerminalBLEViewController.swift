@@ -258,7 +258,7 @@ class TerminalBLEViewController: UIViewController, UITableViewDataSource, UITabl
         
         // Update UI
         
-        DispatchQueue.main.async {
+        DispatchQueue.main.sync {
             
             self.tableViewDebug.beginUpdates()
             

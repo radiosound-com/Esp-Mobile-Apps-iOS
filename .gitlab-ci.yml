@@ -1,0 +1,130 @@
+stages:
+  - build
+  - review
+  - testfleet
+
+variables:
+  LC_ALL: "en_US.UTF-8"
+  LANG: "en_US.UTF-8"
+  GIT_STRATEGY: clone
+
+.build_template: &build_common
+  stage: build
+  tags:
+    - mac
+  script:
+    - cd EspApp && xcodebuild -destination='platform=ios' -scheme "EspApp"
+  artifacts:
+    paths:
+    - EspApp/build
+  cache:
+    paths:
+    - EspApp/build
+
+build review:
+  <<: *build_common
+  environment:
+    name: review/$CI_COMMIT_REF_NAME
+  only:
+    - branches
+  except:
+    - master
+
+build production:
+  <<: *build_common
+  environment:
+    name: production
+  only:
+    - master
+
+.review_template: &review_common
+  tags:
+    - mac
+  stage: review
+  when: manual
+  script:
+    - ios-deploy --bundle EspApp/build/Products/Debug-iphoneos/*.app --id $DEVICE_ID
+  only:
+    - branches
+
+review iPhone 6 Plus:
+  environment:
+    name: iPhone 6 Plus
+  variables:
+    DEVICE_ID: $DEVICE_ID_IPHONE_6_PLUS
+  <<: *review_common
+
+
+review iPhone 5s Black:
+  environment:
+    name: iPhone 5s Black
+  variables:
+    DEVICE_ID: $DEVICE_ID_IPHONE_5S_BLACK
+  <<: *review_common
+
+review iPhone 5s Silver:
+  environment:
+    name: iPhone 5s Silver
+  variables:
+    DEVICE_ID: $DEVICE_ID_IPHONE_5S_SILVER
+  <<: *review_common
+
+review iPod touch 6g:
+  environment:
+    name: iPod touch 6g
+  variables:
+    DEVICE_ID: $DEVICE_ID_IPOD_TOUCH_6
+  <<: *review_common
+
+review iPad Pro:
+  environment:
+    name: iPad Pro
+  variables:
+    DEVICE_ID: $DEVICE_ID_IPAD_PRO
+  <<: *review_common
+
+
+review testfleet:
+  stage: review
+  tags:
+    - mac
+  when: manual
+  allow_failure: false # make job block the following stages
+  only:
+    - branches
+  script:
+    - echo "Preparing test fleet..."
+    - ios-deploy -V
+
+.testfleet_template: &testfleet_common
+  tags:
+    - mac
+  stage: testfleet
+  script:
+    - ios-deploy --bundle EspApp/build/Products/Debug-iphoneos/*.app --id $DEVICE_ID
+
+testfleet iPhone 6 Plus:
+  variables:
+    DEVICE_ID: $DEVICE_ID_IPHONE_6_PLUS
+  <<: *testfleet_common
+
+testfleet iPhone 5s Black:
+  environment:
+    name: iPhone 5s Black
+  variables:
+    DEVICE_ID: $DEVICE_ID_IPHONE_5S_BLACK
+  <<: *testfleet_common
+
+testfleet iPhone 5s Silver:
+  environment:
+    name: iPhone 5s Silver
+  variables:
+    DEVICE_ID: $DEVICE_ID_IPHONE_5S_SILVER
+  <<: *testfleet_common
+
+testfleet iPod touch 6g:
+  environment:
+    name: iPod touch 6g
+  variables:
+    DEVICE_ID: $DEVICE_ID_IPOD_TOUCH_6
+  <<: *testfleet_common

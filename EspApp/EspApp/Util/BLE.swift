@@ -50,7 +50,7 @@ class BLE: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     private var timerScanTimeout: Timer = Timer() // Timeout of scan
     private (set) var maxRSSIFound:Int = 0 // To found closer device
     
-    private var peripheralStartName:String = "" // Device name to scan
+    private var peripheralStartName:String = "bleenky" // Device name to scan
     private (set) var lastPeripheralConnected: String = "" // Last name of device conected
     
     private var peripheralScanned: CBPeripheral? // Peripheral scanned
@@ -64,8 +64,8 @@ class BLE: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     private var debugLevelBle: debugLevel? = nil
     
-    private (set) var sendingNow: Bool = false // Sending now ?
-    
+    private let sendingSemaphore = DispatchSemaphore(value: 1)
+
     private let BLE_TIMEOUT_RECV: Int = 2000 // Timeout of receive part of messages (avoid dirty ones)
     
     // Delegate
@@ -160,7 +160,7 @@ class BLE: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         self.maxRSSIFound = 0
         self.bufferReceived = ""
         self.lastTimeReceived = 0
-        self.peripheralStartName = ""
+        self.peripheralStartName = "bleenky"
         
         self.peripheralScanned = nil
         self.peripheralConnected = nil
@@ -177,38 +177,40 @@ class BLE: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
      */
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral,advertisementData: [String : Any], rssi RSSI: NSNumber) {
         
-        if (peripheral.name?.starts(with: peripheralStartName))! {
-            
-            if debugBle(.verbose) {
-                debugV("name -> \(peripheral.name ?? "")", function: "didDiscover")
-            }
-            
-            // Last device connected found ? (faster, not waiting end of scan)
-            
-            if peripheral.name == self.lastPeripheralConnected {
+        if let name = peripheral.name {
+            if (name.starts(with: peripheralStartName)) {
                 
-                // Save RSSI
+                if debugBle(.verbose) {
+                    debugV("name -> \(name)", function: "didDiscover")
+                }
                 
-                self.maxRSSIFound = RSSI.intValue
+                // Last device connected found ? (faster, not waiting end of scan)
                 
-                // Stop timer
-                
-                self.timerScanTimeout.invalidate()
-                
-                // Stop scan
-                
-                centralManager?.stopScan()
-                
-                // Connect
-                
-                connectPeripheral(peripheral)
-                
-            } else if RSSI.intValue > self.maxRSSIFound {
-                
-                // Closer device
-                
-                peripheralScanned = peripheral
-                self.maxRSSIFound = RSSI.intValue
+                if name == self.lastPeripheralConnected {
+                    
+                    // Save RSSI
+                    
+                    self.maxRSSIFound = RSSI.intValue
+                    
+                    // Stop timer
+                    
+                    self.timerScanTimeout.invalidate()
+                    
+                    // Stop scan
+                    
+                    centralManager?.stopScan()
+                    
+                    // Connect
+                    
+                    connectPeripheral(peripheral)
+                    
+                } else if RSSI.intValue > self.maxRSSIFound {
+                    
+                    // Closer device
+                    
+                    peripheralScanned = peripheral
+                    self.maxRSSIFound = RSSI.intValue
+                }
             }
         }
     }
@@ -659,21 +661,14 @@ class BLE: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     // Send data to BLE peripheral, respecting limit of BLE, spliting it if necessary
     
     func send(_ message: String) {
-        
         // Connected ?
         
         if !self.connected {
             debugE("not connected!")
             return
         }
-        
-        // Not sending ?
-        
-        if sendingNow { // Not allowed this
-            debugE("Still sending now - not allowed")
-            return
-        }
-        
+        sendingSemaphore.wait()
+
         // Message to send
         
         var data = message
@@ -687,9 +682,7 @@ class BLE: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         }
         
         // Send it
-        
-        sendingNow = true // Indicates it
-        
+                
         if debugBle(.debug) {
             debugD ("data send-> \(debugExpandStr(data)) size->\(data.count)")
         }
@@ -717,7 +710,8 @@ class BLE: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             
         }
         
-        sendingNow = false
+        sendingSemaphore.signal()
+        return
     }
     
     // Send data

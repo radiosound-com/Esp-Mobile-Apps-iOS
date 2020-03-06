@@ -57,7 +57,8 @@ public class MainController: NSObject, BLEDelegate {
     
     ///// Variables
     
-    public let versionApp:String = "0.3.1" // Version of this APP
+    public let versionApp:String = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
+
     
     private (set) var versionDevice: String = "?" // Version of BLE device
     
@@ -212,7 +213,7 @@ public class MainController: NSObject, BLEDelegate {
 
 #if !targetEnvironment (simulator) // Real device
 
-    if ble.sendingNow == false && sendFeedback == true  {
+    if sendFeedback == true  {
         
         // Send feedback periodically
         
@@ -530,7 +531,7 @@ func showVCDisconnected (message: String) {
         // If not connected or just sending now, returns
         // To avoid problems
         
-        if !ble.connected || ble.sendingNow {
+        if !ble.connected {
             return
         }
         
@@ -587,17 +588,37 @@ func showVCDisconnected (message: String) {
                 
         debugV("")
         
-        // Is is just sending now, ignore
-        
-        if ble.sendingNow {
-            return
-        }
-        
         // Send a message
         
         bleSendMessage(MessagesBLE.MESSAGE_FEEDBACK, verifyResponse: true, debugExtra: "Feedback")
 
 #endif
+    }
+    
+    func bleSendClearUrl() {
+#if !targetEnvironment(simulator) // Real device
+                        
+        debugV("Sending clear URL")
+        
+        // Send a message
+        
+        bleSendMessage(MessagesBLE.MESSAGE_CLEAR_URL, verifyResponse: true, debugExtra: "Clear URL")
+
+#endif
+
+    }
+
+    func bleSendSetUrl(url: String) {
+#if !targetEnvironment(simulator) // Real device
+                        
+        debugV("Sending URL: \(url)")
+        
+        // Send a message
+        
+        bleSendMessage("\(MessagesBLE.MESSAGE_SET_URL)\(url)", verifyResponse: true, debugExtra: "Set URL")
+
+#endif
+
     }
 
     // Process the message received by BLE
@@ -647,7 +668,8 @@ func showVCDisconnected (message: String) {
             }
             
             bleProcessInitial(fields: fields)
-            
+            break
+
         case MessagesBLE.CODE_ENERGY: // Status of energy: USB ou Battery
             
             if AppSettings.TERMINAL_BLE && self.bleDebugEnabled { // App have a Terminal BLE (debug) and it is enabled ?
@@ -663,6 +685,7 @@ func showVCDisconnected (message: String) {
             if let infoVC:InformationsViewController = navigationController?.topViewController as? InformationsViewController {
                 infoVC.updateEnergyInfo()
             }
+            break
 
         case MessagesBLE.CODE_INFO: // Status of energy: USB ou Battery
             
@@ -673,7 +696,10 @@ func showVCDisconnected (message: String) {
             debugV("Message of info")
             
             bleProcessInfo(fields: fields)
-            
+            break
+
+
+
         case MessagesBLE.CODE_ECHO: // Echo -> receives the same message sended
             
             // Echo received
@@ -714,7 +740,8 @@ func showVCDisconnected (message: String) {
             }
 
             bleAbortConnection(message: "The device is turn off")
-            
+            break
+
         default: // Invalid code
             
             if AppSettings.TERMINAL_BLE && self.bleDebugEnabled { // App have a Terminal BLE (debug) and it is enabled ?
