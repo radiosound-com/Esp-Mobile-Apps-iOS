@@ -46,6 +46,17 @@ class MainMenuViewController: UIViewController, UITableViewDataSource, UITableVi
         
     }
     
+    @IBAction func ledButtonPress(_ sender: Any) {
+        if (ledButton.isSelected) {
+            self.mainController.setLedState(active: false)
+            ledButton.isSelected = false
+        }
+        else {
+            self.mainController.setLedState(active: true)
+            ledButton.isSelected = true
+        }
+    }
+    
     ////// Variables
     
     // Menu options array

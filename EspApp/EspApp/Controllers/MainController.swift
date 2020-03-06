@@ -75,6 +75,7 @@ public class MainController: NSObject, BLEDelegate {
     private (set) var statusBattery:String = "100%"         // Battery status
     private (set) var voltageBattery: Float = 0.0           // Voltage calculated of battery
     private (set) var readADCBattery: Int = 0               // Value of ADC read of battery
+    private (set) var ledOn: Bool = false
     
     private (set) var debugging: Bool = true // Debugging ?
     
@@ -429,6 +430,16 @@ func showVCDisconnected (message: String) {
     #endif
     }
     
+    // Set desired LED state
+    func setLedState(active: Bool) {
+        if (active) {
+            bleSendMessage(MessagesBLE.MESSAGE_LEDON)
+        }
+        else {
+            bleSendMessage(MessagesBLE.MESSAGE_LEDOFF)
+        }
+    }
+    
     // Connected 
 
     private func bleConnected () {
@@ -447,6 +458,7 @@ func showVCDisconnected (message: String) {
         
         sendFeedback = true
         
+        setLedState(active: ledOn)
     }
     
     // Abort the connection
@@ -698,6 +710,14 @@ func showVCDisconnected (message: String) {
             bleProcessInfo(fields: fields)
             break
 
+        case MessagesBLE.CODE_LEDOFF:
+            // Received LED off command response
+            ledOn = false
+            break
+        case MessagesBLE.CODE_LEDON:
+            // Received LED on command response
+            ledOn = true
+            break
 
 
         case MessagesBLE.CODE_ECHO: // Echo -> receives the same message sended

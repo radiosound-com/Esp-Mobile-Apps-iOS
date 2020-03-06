@@ -122,7 +122,7 @@
                         <viewControllerLayoutGuide type="bottom" id="x5B-wD-2oc"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="OGj-Gh-b9B">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2v7-tc-8NO" userLabel="Table View Main Menu">
@@ -153,7 +153,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="RaH-G8-Lf2">
                                                     <rect key="frame" x="73" y="21" width="232" height="43.5"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1z2-4A-GgM">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1z2-4A-GgM">
                                                             <rect key="frame" x="0.0" y="0.0" width="232" height="21.5"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -163,7 +163,7 @@
                                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                                             </variation>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Description" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S3C-Bk-aFg">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S3C-Bk-aFg">
                                                             <rect key="frame" x="0.0" y="26.5" width="232" height="17"/>
                                                             <color key="tintColor" red="0.2274509804" green="0.52941176469999995" blue="0.81176470590000005" alpha="1" colorSpace="calibratedRGB"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -222,12 +222,12 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BpX-T2-LxD">
-                                        <rect key="frame" x="24" y="0.0" width="250" height="24"/>
+                                        <rect key="frame" x="24" y="0.0" width="235" height="24"/>
                                         <attributedString key="attributedText">
                                             <fragment content="...">
                                                 <attributes>
                                                     <color key="NSColor" red="0.2274509804" green="0.52941176469999995" blue="0.81176470590000005" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <font key="NSFont" metaFont="message" size="11"/>
+                                                    <font key="NSFont" metaFont="label" size="11"/>
                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                 </attributes>
                                             </fragment>
@@ -235,7 +235,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5av-zK-NIo" userLabel="Label Percent Battery">
-                                        <rect key="frame" x="274" y="0.0" width="31" height="24"/>
+                                        <rect key="frame" x="259" y="0.0" width="31" height="24"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.089442618191242218" green="0.37682080268859863" blue="0.68410223722457886" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -244,13 +244,25 @@
                                         </variation>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="251" image="battery0" translatesAutoresizingMaskIntoConstraints="NO" id="AxO-7x-wxs" userLabel="Image View Battery">
-                                        <rect key="frame" x="305" y="0.0" width="15" height="24"/>
+                                        <rect key="frame" x="290" y="0.0" width="30" height="24"/>
                                     </imageView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="24" id="3qs-gP-w3U"/>
                                 </constraints>
                             </stackView>
+                            <button opaque="NO" contentMode="center" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6cc-nv-Xqw">
+                                <rect key="frame" x="87" y="386" width="200" height="200"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" button="YES" image="YES"/>
+                                </accessibility>
+                                <state key="normal" title="Button" image="off"/>
+                                <state key="selected" image="on"/>
+                                <connections>
+                                    <action selector="ledButtonPress:" destination="rRO-hu-dfM" eventType="touchUpInside" id="Yb3-wD-AbG"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.77647058820000003" green="0.89019607840000003" blue="0.99215686270000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -278,6 +290,7 @@
                         <outlet property="imageViewBluetooth" destination="oym-nm-rxT" id="Z44-hj-a8S"/>
                         <outlet property="labelPercentBattery" destination="5av-zK-NIo" id="kgZ-0H-1Qa"/>
                         <outlet property="labelStatus" destination="BpX-T2-LxD" id="5XC-Nx-JPZ"/>
+                        <outlet property="ledButton" destination="6cc-nv-Xqw" id="bk3-kE-SxC"/>
                         <outlet property="tableViewMainMenu" destination="2v7-tc-8NO" id="HJg-rx-o0X"/>
                         <segue destination="o9S-kf-IzI" kind="show" id="efH-mn-eCB"/>
                         <segue destination="tUY-HW-ZeJ" kind="show" id="Nbz-Yx-c4r"/>
@@ -345,7 +358,7 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="GFV-J1-1JS">
-                                                <rect key="frame" x="0.0" y="96" width="320" height="70"/>
+                                                <rect key="frame" x="0.0" y="97" width="320" height="68"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="...  " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rtl-5d-9au" userLabel="labelMessage">
                                                         <rect key="frame" x="0.0" y="0.0" width="320" height="30"/>
@@ -360,7 +373,7 @@
                                                         </variation>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f3a-iI-Wbd" userLabel="buttonTryAgain" customClass="RoundButton" customModule="EspApp" customModuleProvider="target">
-                                                        <rect key="frame" x="94.5" y="40" width="131" height="30"/>
+                                                        <rect key="frame" x="89.5" y="40" width="141" height="28"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
                                                         <state key="normal" title="Try connect again"/>
                                                         <userDefinedRuntimeAttributes>
@@ -459,7 +472,7 @@
                                             <fragment content="...">
                                                 <attributes>
                                                     <color key="NSColor" red="0.2274509804" green="0.52941176469999995" blue="0.81176470590000005" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <font key="NSFont" metaFont="message" size="11"/>
+                                                    <font key="NSFont" metaFont="label" size="11"/>
                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                 </attributes>
                                             </fragment>
@@ -609,7 +622,7 @@
                                             <fragment content="...">
                                                 <attributes>
                                                     <color key="NSColor" red="0.2274509804" green="0.52941176469999995" blue="0.81176470590000005" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <font key="NSFont" metaFont="message" size="11"/>
+                                                    <font key="NSFont" metaFont="label" size="11"/>
                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                 </attributes>
                                             </fragment>
@@ -935,7 +948,7 @@
                                             <fragment content="...">
                                                 <attributes>
                                                     <color key="NSColor" red="0.2274509804" green="0.52941176469999995" blue="0.81176470590000005" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <font key="NSFont" metaFont="message" size="11"/>
+                                                    <font key="NSFont" metaFont="label" size="11"/>
                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                 </attributes>
                                             </fragment>
@@ -1030,7 +1043,7 @@
                                             <fragment content="...">
                                                 <attributes>
                                                     <color key="NSColor" red="0.2274509804" green="0.52941176469999995" blue="0.81176470590000005" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <font key="NSFont" metaFont="message" size="11"/>
+                                                    <font key="NSFont" metaFont="label" size="11"/>
                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                 </attributes>
                                             </fragment>
@@ -1088,6 +1101,8 @@
         <image name="battery0" width="15" height="32"/>
         <image name="bt_icon_inactive" width="72" height="72"/>
         <image name="exit" width="20" height="20"/>
+        <image name="off" width="200" height="200"/>
+        <image name="on" width="200" height="200"/>
         <image name="refresh_small" width="20" height="20"/>
     </resources>
 </document>

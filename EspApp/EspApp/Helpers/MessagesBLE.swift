@@ -39,6 +39,8 @@ public class MessagesBLE {
     public static let CODE_INITIAL:Int =     1
     public static let CODE_ENERGY:Int =     10
     public static let CODE_INFO:Int =       11
+    public static let CODE_LEDOFF:Int =     50
+    public static let CODE_LEDON:Int =      51
     public static let CODE_ECHO:Int =       70
     public static let CODE_LOGGING:Int =    71
     public static let CODE_FEEDBACK:Int =   80
@@ -53,6 +55,8 @@ public class MessagesBLE {
     public static let MESSAGE_INITIAL:String =   "\(String(format: "%02d",CODE_INITIAL)):"
     public static let MESSAGE_ENERGY:String =    "\(String(format: "%02d",CODE_ENERGY)):"
     public static let MESSAGE_INFO:String =      "\(String(format: "%02d",CODE_INFO)):"
+    public static let MESSAGE_LEDOFF:String =    "\(String(format: "%02d",CODE_LEDOFF)):"
+    public static let MESSAGE_LEDON:String =     "\(String(format: "%02d",CODE_LEDON)):"
     public static let MESSAGE_ECHO:String =      "\(String(format: "%02d",CODE_ECHO)):"
     public static let MESSAGE_LOGGING:String =   "\(String(format: "%02d",CODE_LOGGING)):"
     public static let MESSAGE_FEEDBACK:String =  "\(String(format: "%02d",CODE_FEEDBACK)):"
